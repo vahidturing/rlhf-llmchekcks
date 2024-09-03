@@ -1,5 +1,7 @@
 import concurrent.futures
 import json
+from datetime import time
+from os import times
 from urllib.parse import urlparse
 import gspread
 import requests
@@ -58,6 +60,8 @@ def three_retry(func):
             result = func(*args, **kwargs)
             if result:
                 return result
+
+            time.sleep(0.5)
 
         return result
 
@@ -178,11 +182,11 @@ if __name__ == '__main__':
         'rlhf_Evaluationform__realistic'
     ]
 
-    workers_count = 1
+    workers_count = 5
 
     worksheet = get_worksheet(credentials_file, sheet_url, tab_name)
 
     rows = worksheet.get_all_values()
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers_count) as executor:
         list(tqdm(executor.map(lambda i_row: process_row(i_row[0], i_row[1], worksheet), enumerate(rows)), total=len(rows)))

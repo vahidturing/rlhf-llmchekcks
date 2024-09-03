@@ -76,7 +76,7 @@ The script contains several parameters that you can customize according to your 
     - **Description**: These keywords are used to filter out important checks from the results.
 
 11. **workers_count**: The number of concurrent workers used to process rows.
-    - **Default**: `1`
+    - **Default**: `5`
     - **Description**: Controls the number of threads used for concurrent processing of rows in the Google Sheet.
 
 ## Running the Script
@@ -91,8 +91,6 @@ python main.py
 
 The script will connect to the specified Google Sheet, process each row, and update the sheet with the results from the API queries.
 
-## Notes
+## RLHF Fetch Retry
 
-- The script skips the header row during processing.
 - Error handling is implemented for API requests, and the script will retry failed requests up to three times before logging an error and moving on.
-- If you encounter issues, check the console output for error messages to diagnose the problem.
